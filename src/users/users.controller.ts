@@ -23,7 +23,7 @@ export class UsersController {
   update(
     @Param('id') id: string,
     @Body() body: { name?: string; username?: string, email?: string, password?: string },
-  ): Promise<User> {console.log('XXXFFF')
+  ): Promise<User> {
     return this.usersService.update(Number(id), body);
   }
 

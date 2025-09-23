@@ -9,6 +9,9 @@ export class Task {
   @Column({ nullable: true })
   title: string;
 
+  @Column({ nullable: true })
+  description?: string;
+
   @OneToMany(() => Assignment, (assignment) => assignment.task)
   assignments: Assignment[];
 }
