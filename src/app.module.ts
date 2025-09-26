@@ -12,9 +12,9 @@ import { Assignment } from './assignments/assignment.entity';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'postgres',
+      type: 'mysql',
       host: 'localhost',
-      port: 5432,
+      port: 3306,
       username: 'tooba',
       password: 'loulou',
       database: 'demo_app',

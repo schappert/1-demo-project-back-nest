@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
+import { CreateUserDto } from '../dtos/users.dto';
 
 @Injectable()
 export class UsersService {
@@ -23,13 +24,12 @@ export class UsersService {
 
   // Création d’un utilisateur avec hash du mot de passe
   async create(
-    name: string,
-    username: string,
-    email: string,
-    password: string,
+    createUserDto: CreateUserDto,
   ): Promise<User> {
+    const { name, username, email, password } = createUserDto;
     const hashed = await bcrypt.hash(password, 10);
     const user = this.repo.create({ name, username, email, password: hashed });
+    console.log('USER', user)
     return await this.repo.save(user);
   }
 
