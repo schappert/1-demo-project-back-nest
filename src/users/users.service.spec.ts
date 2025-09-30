@@ -64,7 +64,13 @@ describe('UsersService', () => {
       repo.create.mockReturnValue({ ...dto, password: hashedPassword } as any);
       repo.save.mockResolvedValue({ id: 1, ...dto, password: hashedPassword } as User);
 
-      const result = await service.create(dto.name, dto.username, dto.email, dto.password);
+      const result = await service.create({
+        name: dto.name,
+        username: dto.username,
+        email: dto.email,
+        password: dto.password,
+      });
+
       expect(result).toHaveProperty('id', 1);
       expect(repo.create).toHaveBeenCalled();
       expect(repo.save).toHaveBeenCalled();
