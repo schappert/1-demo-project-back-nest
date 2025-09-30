@@ -2,7 +2,7 @@ import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common'
 import { UsersService } from './users.service';
 import { User } from './user.entity';
 import { CreateUserDto } from '../dtos/users.dto';
-// test : 1 CI-CD xxx
+
 @Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}

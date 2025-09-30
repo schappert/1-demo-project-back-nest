@@ -2,11 +2,12 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { AssignmentsModule } from './assignments/assignments.module';
-import { AuthModule } from './auth/auth.module';
 import { TasksModule } from './tasks/tasks.module';
 import { User } from './users/user.entity';
 import { Task } from './tasks/task.entity';
 import { Assignment } from './assignments/assignment.entity';
+import { AuthModule } from './auth/auth.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 
 @Module({
@@ -26,6 +27,7 @@ import { Assignment } from './assignments/assignment.entity';
     TasksModule,
     AssignmentsModule,
     AuthModule,
+    DashboardModule,
   ],
 })
 export class AppModule {}

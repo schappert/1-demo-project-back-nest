@@ -22,6 +22,10 @@ export class UsersService {
     return await this.repo.findOne({ where: { id } });
   }
 
+  findOneByUsername(username: string) {
+    return this.repo.findOne({ where: { username } });
+  }
+
   // Création d’un utilisateur avec hash du mot de passe
   async create(
     createUserDto: CreateUserDto,
