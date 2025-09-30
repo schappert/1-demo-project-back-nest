@@ -33,9 +33,11 @@ describe('UsersController', () => {
   describe('getAll', () => {
     it('should return an array of users', async () => {
       const result: User[] = [
-        { id: 1, name: 'Alice', username: 'alice', email: 'alice@test.com', password: 'pass' },
+        { id: 1, name: 'Alice', username: 'alice', email: 'alice@test.com', password: 'pass', assignments: [] },
+
       ];
-      service.findAll.mockResolvedValue(result);
+      (service.findAll as jest.Mock).mockResolvedValue(result);
+
 
       expect(await controller.getAll()).toBe(result);
       expect(service.findAll).toHaveBeenCalled();
@@ -46,7 +48,7 @@ describe('UsersController', () => {
     it('should create a new user', async () => {
       const payload = { name: 'Bob', username: 'bob', email: 'bob@test.com', password: 'pass' };
       const createdUser = { id: 2, ...payload };
-      service.create.mockResolvedValue(createdUser);
+      (service.create as jest.Mock).mockResolvedValue(createdUser);
 
       expect(await controller.create(payload)).toBe(createdUser);
       expect(service.create).toHaveBeenCalledWith(payload.name, payload.username, payload.email, payload.password);
@@ -58,7 +60,7 @@ describe('UsersController', () => {
       const id = '1';
       const payload = { name: 'Alice Updated' };
       const updatedUser = { id: 1, name: 'Alice Updated', username: 'alice', email: 'alice@test.com', password: 'pass' };
-      service.update.mockResolvedValue(updatedUser);
+      (service.update as jest.Mock).mockResolvedValue(updatedUser);
 
       expect(await controller.update(id, payload)).toBe(updatedUser);
       expect(service.update).toHaveBeenCalledWith(1, payload);
@@ -68,7 +70,7 @@ describe('UsersController', () => {
   describe('delete', () => {
     it('should delete a user', async () => {
       const id = '1';
-      service.remove.mockResolvedValue(undefined);
+      (service.remove as jest.Mock).mockResolvedValue(undefined);
 
       await expect(controller.delete(id)).resolves.toBeUndefined();
       expect(service.remove).toHaveBeenCalledWith(1);

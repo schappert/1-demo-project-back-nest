@@ -82,7 +82,7 @@ describe('AssignmentsController', () => {
 
   it('should return error if task is not found', async () => {
     usersService.findOneById.mockResolvedValue({ id: 1 } as any);
-    tasksService.findOneById.mockResolvedValue(null);
+    tasksService.findOneById.mockResolvedValue(undefined as any);
 
     const result = await controller.assign({ userId: 1, taskId: 999 });
 

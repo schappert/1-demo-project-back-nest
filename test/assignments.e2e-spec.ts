@@ -74,6 +74,7 @@ describe('AssignmentsController (e2e)', () => {
       relations: ['user', 'task'],
     });
     expect(assignment).toBeDefined();
+    if (!assignment) throw new Error('Assignment not found');
     expect(assignment.user.id).toBe(user.id);
     expect(assignment.task.id).toBe(task.id);
   });
