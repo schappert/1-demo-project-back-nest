@@ -12,10 +12,4 @@ export class AuthController {
     if (!user) throw new UnauthorizedException('Invalid credentials');
     return this.authService.login(user);
   }
-
-  @Get('test')
-  testRoute() {
-    return 'Hello test auth !'
-  }
-
 }

@@ -8,6 +8,8 @@ import { Task } from './tasks/task.entity';
 import { Assignment } from './assignments/assignment.entity';
 import { AuthModule } from './auth/auth.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { ProductsModule } from './products/products.module';
+import { Product } from './products/product.entity';
 
 
 @Module({
@@ -19,7 +21,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
       username: 'tooba',
       password: 'loulou',
       database: 'demo_app',
-      entities: [User, Task, Assignment],
+      entities: [User, Task, Assignment, Product],
       synchronize: false,
       logging: true, // logge les requêtes
     }),
@@ -28,6 +30,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
     AssignmentsModule,
     AuthModule,
     DashboardModule,
+    ProductsModule
   ],
 })
 export class AppModule {}
