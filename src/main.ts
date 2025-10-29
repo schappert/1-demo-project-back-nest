@@ -3,14 +3,18 @@ import { AppModule } from './app.module';
 import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
+  const allowedOrigins = [
+    'http://localhost:5173',
+    'https://1-demo-project-front-react.vercel.app',
+  ];
+
   const app = await NestFactory.create(AppModule);
   app.use(cookieParser());
   app.enableCors({
-    origin: [
-      'http://localhost:5173', // dev local
-      'https://1-demo-project-front-react*.vercel.app',
-    ],
-    credentials: true, // autorise les cookies pour setter le JWT http-only
+    origin: allowedOrigins,
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   });
   await app.listen(process.env.PORT ?? 3000);
 }
