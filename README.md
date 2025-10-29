@@ -1,98 +1,86 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+🚀 Backend — API Sécurisée (NestJS + JWT HTTPOnly)
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Backend développé avec NestJS, conçu pour être scalable, sécurisé, et prêt pour la production.
+Cette API gère l’authentification, des données utilisateurs et le tableau de bord métier.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+🛡️ Sécurité & Authentification Moderne
 
-## Description
+Ce backend adopte les dernières recommandations OWASP et les meilleures pratiques industrielles :
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+✔ JWT sécurisé via Cookies HTTPOnly (jamais exposés au frontend)
+✔ Access Token court + Refresh Token rotatif
+✔ Protection CSRF via SameSite=Strict
+✔ Protection XSS : cookies non accessibles via JavaScript
+✔ Refresh Tokens hachés + salés avant stockage en base
+✔ Logout totalement sécurisé (révocation du Refresh Token)
 
-## Project setup
+<table> <tr><td>Type</td><td>Durée</td><td>Stockage</td><td>Sécurité</td></tr> <tr><td>Access Token</td><td>15 min</td><td>Cookie HTTPOnly</td><td>✅ Rotation auto</td></tr> <tr><td>Refresh Token</td><td>7 jours</td><td>Cookie HTTPOnly</td><td>✅ Haché en base</td></tr> </table>
 
-```bash
-$ npm install
-```
+🔐 Résultat : aucune donnée d’authentification n’est lisible depuis le navigateur.
+Conforme aux pratiques Zero-Trust modernes.
 
-## Compile and run the project
+🧩 Architecture Technique
 
-```bash
-# development
-$ npm run start
+Node.js 20+
 
-# watch mode
-$ npm run start:dev
+NestJS (architecture modulaire)
 
-# production mode
-$ npm run start:prod
-```
+TypeORM (PostgreSQL / MySQL adaptable)
 
-## Run tests
+Validation DTO + Pipes
 
-```bash
-# unit tests
-$ npm run test
+Guards & Strategies JWT (Access + Refresh)
 
-# e2e tests
-$ npm run test:e2e
+📌 Le système d’authentification inclut :
 
-# test coverage
-$ npm run test:cov
-```
+JwtStrategy
 
-## Deployment
+JwtRefreshStrategy
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+JwtAuthGuard
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+📊 Fonctionnalités
+Catégorie	Fonction
+Auth	Login, Refresh, Logout
+Sécurité JWT	Rotation, Protection cookies, Vérifications multi-niveaux
+Dashboard	Comptes utilisateurs + KPIs personnalisés
+rôle backend	Architecture professionnelle modulaire
+▶️ Installation & Démarrage
+git clone https://github.com/<ton-user>/<ton-repo>.git
+cd backend
+npm install
+npm run start:dev
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+Le serveur démarre sur :
+➡️ http://localhost:3000
 
-## Resources
+🔥 Exemple d’Endpoints
+Méthode	Route	Sécurité	Description
+POST	/auth/login	🔐 Cookies HTTPOnly	Connexion
+POST	/auth/refresh	Refresh Token	Renouvellement session
+GET	/dashboard	JWT Access	KPIs utilisateurs
+📌 Dashboard Sécurisé
 
-Check out a few resources that may come in handy when working with NestJS:
+Chaque requête au Dashboard ✅ nécessite un Access Token valide.
+En cas d’expiration ➜ un Refresh automatique transparent est déclenché.
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+➡️ Meilleure DX + robustesse en production
 
-## Support
+🎯 Objectif du projet
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Ce backend est conçu comme une base solide professionnelle pour :
 
-## Stay in touch
+✅ Applications SaaS
+✅ Plateformes sécurisées
+✅ Applications Dashboard avec rôles & permissions
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+✅ Qualité & Maintainability
 
-## License
+Code 100% TypeScript
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Services et Controllers clairement séparés
+
+Logs détaillés
+
+Facilité de tests E2E
