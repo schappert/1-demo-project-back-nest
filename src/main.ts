@@ -8,8 +8,8 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       'http://localhost:5173', // dev local
-      'https://1-demo-project-front-react-git-main-sebastienchapperts-projects.vercel.app',
-    ], // A adpater au front React
+      'https://1-demo-project-front-react*.vercel.app',
+    ],
     credentials: true, // autorise les cookies pour setter le JWT http-only
   });
   await app.listen(process.env.PORT ?? 3000);

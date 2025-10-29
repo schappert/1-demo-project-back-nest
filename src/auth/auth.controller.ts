@@ -4,10 +4,11 @@ import {
   Body,
   UnauthorizedException,
   Req,
-  Res
+  Res, UseGuards, Get,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import type { Request, Response } from 'express';
+import { JwtAuthGuard } from './jwt-auth.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -40,6 +41,13 @@ export class AuthController {
     });
 
     return { message: 'Login successful' };
+  }
+
+  // === USER SESSION CHECK ===
+  @UseGuards(JwtAuthGuard)
+  @Get('me')
+  getMe(@Req() req: any) {
+    return req.user;
   }
 
   // === REFRESH TOKEN ===

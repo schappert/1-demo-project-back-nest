@@ -37,32 +37,15 @@ export class AuthService {
     return { access_token, refresh_token };
   }
 
-  async refreshToken(refreshToken: string) {
+  async refreshToken(token: string) {
     try {
-      const payload = await this.jwtService.verifyAsync(refreshToken, {
+      const payload: any = this.jwtService.verify(token, {
         secret: process.env.JWT_REFRESH_SECRET || 'refresh_secret_dev',
       });
 
       const user = await this.usersService.findOneById(payload.sub);
       if (!user) throw new UnauthorizedException();
-
-      const access_token = await this.jwtService.signAsync(
-        { username: user.username, sub: user.id },
-        {
-          secret: process.env.JWT_ACCESS_SECRET || 'access_secret_dev',
-          expiresIn: '15m',
-        },
-      );
-
-      const new_refresh_token = await this.jwtService.signAsync(
-        { username: user.username, sub: user.id },
-        {
-          secret: process.env.JWT_REFRESH_SECRET || 'refresh_secret_dev',
-          expiresIn: '7d',
-        },
-      );
-
-      return { access_token, refresh_token: new_refresh_token };
+      return this.login(user);
     } catch {
       throw new UnauthorizedException('Invalid refresh token');
     }
